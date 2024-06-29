@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-const baseURL = 'http://192.168.219.113:8090';
+const baseURL = 'http://116.44.163.82:8090';
 export const api: AxiosInstance = axios.create({ baseURL });
 
 export interface SignupData {

@@ -1,7 +1,8 @@
 'use client';
 import { userInfoAPI } from '@/app/api/me';
 import { getCookie } from '@/util/cookie';
-import React, { useEffect, useState } from 'react';
+import { getDate } from '@/util/getDate';
+import { useEffect, useState } from 'react';
 
 interface MyInfoData {
   createdDateTime: string;
@@ -29,10 +30,13 @@ const MyPage = () => {
 
   return (
     <div>
-      <h1>{myInfoData?.id}</h1>
       <h1>{myInfoData?.email}</h1>
       <h1>{myInfoData?.name}</h1>
-      <h1>{myInfoData?.createdDateTime}</h1>
+      <h1>
+        {myInfoData?.createdDateTime
+          ? getDate(myInfoData?.createdDateTime)
+          : ''}
+      </h1>
     </div>
   );
 };

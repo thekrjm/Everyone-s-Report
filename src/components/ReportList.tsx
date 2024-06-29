@@ -1,22 +1,26 @@
-'use client';
 import { getReportAPI } from '@/app/api/report';
-import { getCookie } from '@/util/cookie';
-import React, { useEffect } from 'react';
+import { cookies } from 'next/headers';
 
-const ReportList = () => {
-  const token = getCookie('accessToken');
-  console.log('token', token);
+const ReportList = async () => {
+  const getCookie = cookies();
+  const token = getCookie.get('accessToken')?.value;
 
-  if (token) {
-    useEffect(() => {
-      const fetchData = async () => {
-        const { data } = await getReportAPI(token, 0, 10);
-        console.log('report data', data);
-      };
-      fetchData();
-    }, []);
+  if (!token) {
+    console.log('necessary authorazation');
+    return null;
   }
-  return <div>ReportList</div>;
+  const { data } = await getReportAPI(token, 0, 10);
+  return (
+    <section>
+      <div>
+        {data.list.map(({ id, title }: { id: string; title: string }) => (
+          <div key={id}>
+            <div>{title}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 };
 
 export default ReportList;
